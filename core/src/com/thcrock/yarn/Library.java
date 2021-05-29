@@ -61,7 +61,7 @@ public class Library {
 		public void invoke(Value... params);
 	}
 
-	public static class FunctionInfo {
+	protected static class FunctionInfo {
 		//the name of the function as it exists in the script
 		private String name;
 		//the number of parameters this function requores.
@@ -77,21 +77,21 @@ public class Library {
 
 		//TODO: support for typed parameters
 		//TODO: support for return type
-		public FunctionInfo(String name, int param_count, Function implementation) {
+		protected FunctionInfo(String name, int param_count, Function implementation) {
 			this.name = name;
 			this.param_count = param_count;
 			this.function = implementation;
 			this.ret_function = null;
 		}
 
-		public FunctionInfo(String name, int param_count, ReturningFunc implementation) {
+		protected FunctionInfo(String name, int param_count, ReturningFunc implementation) {
 			this.name = name;
 			this.param_count = param_count;
 			this.ret_function = implementation;
 			this.function = null;
 		}
 
-		public FunctionInfo(String name, int param_count) {
+		protected FunctionInfo(String name, int param_count) {
 			this.name = name;
 			this.param_count = param_count;
 			this.ret_function = null;
@@ -144,7 +144,7 @@ public class Library {
 
 		}
 
-		public boolean isParamCountCorrect(int param_count) {
+		protected boolean isParamCountCorrect(int param_count) {
 			return this.param_count == param_count || this.param_count == -1;
 		}
 	}

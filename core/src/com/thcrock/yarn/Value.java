@@ -91,7 +91,7 @@ public class Value implements Comparable<Value> {
 			return;
 		}
 
-		String error = String.format("Attempted to create a Value using a %s; currently, "
+		String error = StringUtils.format("Attempted to create a Value using a %s; currently, "
 				+ "Values can only be numbers, strings, bools or null.", value.getClass().getSimpleName());
 		throw new YarnRuntimeException(error);
 	}
@@ -100,7 +100,7 @@ public class Value implements Comparable<Value> {
 		return type;
 	}
 
-	public void setType(Type type) {
+	protected void setType(Type type) {
 		this.type = type;
 	}
 
@@ -202,7 +202,7 @@ public class Value implements Comparable<Value> {
 			default:break;
 		}
 
-		throw new IllegalStateException(String.format("Cant get good backing type for %s", this.type));
+		throw new IllegalStateException(StringUtils.format("Cant get good backing type for %s", this.type));
 	}
 
 	public enum Type {
@@ -267,7 +267,7 @@ public class Value implements Comparable<Value> {
 
 	@Override
 	public String toString() {
-		return String.format("[Value: type=%1$s, AsNumber=%2$s, AsBool=%3$s, AsString=%4$s]", type, asNumber(),
+		return StringUtils.format("[Value: type=%1$s, AsNumber=%2$s, AsBool=%3$s, AsString=%4$s]", type, asNumber(),
 				asBool(), asString());
 	}
 
@@ -302,7 +302,7 @@ public class Value implements Comparable<Value> {
 			return new Value(a.asNumber() + b.asNumber());
 		}
 
-		throw new IllegalArgumentException(String.format("Cannot add types %s and %s.", a.type, b.type));
+		throw new IllegalArgumentException(StringUtils.format("Cannot add types %s and %s.", a.type, b.type));
 	}
 
 	/**
@@ -318,7 +318,7 @@ public class Value implements Comparable<Value> {
 			return new Value(a.asNumber() - b.asNumber());
 		}
 
-		throw new IllegalArgumentException(String.format("Cannot subtract types %s and %s.", a.type, b.type));
+		throw new IllegalArgumentException(StringUtils.format("Cannot subtract types %s and %s.", a.type, b.type));
 	}
 
 	/**
@@ -334,7 +334,7 @@ public class Value implements Comparable<Value> {
 			return new Value(a.asNumber() * b.asNumber());
 		}
 
-		throw new IllegalArgumentException(String.format("Cannot multiply types %s and %s.", a.type, b.type));
+		throw new IllegalArgumentException(StringUtils.format("Cannot multiply types %s and %s.", a.type, b.type));
 	}
 
 	/**
@@ -350,7 +350,7 @@ public class Value implements Comparable<Value> {
 			return new Value(a.asNumber() / b.asNumber());
 		}
 
-		throw new IllegalArgumentException(String.format("Cannot divide types %s and %s.", a.type, b.type));
+		throw new IllegalArgumentException(StringUtils.format("Cannot divide types %s and %s.", a.type, b.type));
 	}
 
 	/**
@@ -365,7 +365,7 @@ public class Value implements Comparable<Value> {
 				|| b.type == Type.NUMBER && (a.type == Type.NUMBER || a.type == Type.NULL)) {
 			return new Value(a.asNumber() % b.asNumber());
 		}
-		throw new IllegalArgumentException(String.format("Cannot modulo types %s and %s.", a.type, b.type));
+		throw new IllegalArgumentException(StringUtils.format("Cannot modulo types %s and %s.", a.type, b.type));
 	}
 
 	/**

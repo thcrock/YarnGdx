@@ -1,16 +1,10 @@
 package com.kyper.yarn;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.kyper.yarn.Analyser.Diagnosis.Severity;
 import com.kyper.yarn.Program.Instruction;
-import com.kyper.yarn.Program.Node;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Analyser {
 
@@ -82,8 +76,7 @@ public class Analyser {
 			if (context_label == null || context_label.isEmpty()) {
 				message = this.message;
 			} else {
-				//TODO: add StringUtils Locale format function
-				message = String.format(Locale.ROOT," %1$s: %2$s", context_label, this.message);
+				message = StringUtils.format(" %1$s: %2$s", context_label, this.message);
 			}
 
 			return message;
@@ -122,7 +115,7 @@ public class Analyser {
 	}
 
 	protected static abstract class ASTAnalyser {
-		public abstract Iterable<Diagnosis> diagnose(Node node);
+		public abstract Iterable<Diagnosis> diagnose(Parser.Node node);
 	}
 
 	protected static abstract class CompiledProgramAnalyser {
@@ -143,10 +136,10 @@ public class Analyser {
 				Program.Node the_node = nodeinfo.getValue();
 
 				for (Program.Instruction instruction : the_node.instructions) {
-					switch (instruction.operation) {
+					switch (instruction.getOperation()) {
 					case PushVariable:
 					case StoreVariable:
-						variables.add((String) instruction.operands.get(0).getStringValue());
+						variables.add((String) instruction.operandA());
 					default:
 						break;
 					}
@@ -182,12 +175,12 @@ public class Analyser {
 				for (int i = 0; i < instructions.size(); i++) {
 					Instruction instruction = instructions.get(i);
 
-					switch (instruction.operation) {
+					switch (instruction.getOperation()) {
 					case PushVariable:
-						read_vars.add((String) instruction.operands.get(0).getStringValue());
+						read_vars.add((String) instruction.operandA());
 						break;
 					case StoreVariable:
-						written_vars.add((String) instruction.operands.get(0).getStringValue());
+						written_vars.add((String) instruction.operandA());
 						break;
 					default:
 						break;

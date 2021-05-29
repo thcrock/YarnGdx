@@ -1,17 +1,19 @@
 package com.kyper.yarn;
 
+import text.formic.Stringf;
+
 public class StringUtils {
-//	private static final int START_CAPACITY = 200;
-//	private static StringBuilder string_builder;
-//
-////	private static StringBuilder getBuilder() {
-////		if (string_builder == null)
-////			string_builder = new StringBuilder(START_CAPACITY);
-////		return string_builder;
-////	}
+	private static final int START_CAPACITY = 200;
+	private static StringBuilder string_builder;
+
+	private static StringBuilder getBuilder() {
+		if (string_builder == null)
+			string_builder = new StringBuilder(START_CAPACITY);
+		return string_builder;
+	}
 
 	public static String format(String format_string, Object... params) {
-		return String.format(format_string, params);
+		return Stringf.format(format_string, params);
 		//TODO: To keep compatibility with GWT we need to re-implement this
 		//TODO: Right now it causes too much errors.
 		
@@ -69,14 +71,6 @@ public class StringUtils {
 //
 //		return builder.toString();
 	}
-	
-	public static String replaceLast(String text, String regex, String replacement) {
-        return text.replaceFirst("(?s)"+regex+"(?!.*?"+regex+")", replacement);
-    }
-	
-	public static String removeExtension(String input) {
-		return input.replaceFirst("[.][^.]+$", "");
-	}
 
 	public static boolean isDigit(char c) {
 		switch(c) {
@@ -112,17 +106,12 @@ public class StringUtils {
 	}
 
 	public static String trimEnd(String value) {
-		return trimEnd(value,"\\s+$");
+		// Use replaceFirst to remove trailing spaces.
+		return value.replaceFirst("\\s+$", "");
 	}
 
-	public static String trimEnd(String value,String trimChars) {
-		return value.replaceAll("[" + trimChars + "]+$", "");
-	}
-	
 	public static String trimStart(String value) {
 		// Remove leading spaces.
 		return value.replaceFirst("^\\s+", "");
 	}
-	
-
 }
